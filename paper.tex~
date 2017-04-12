@@ -1,0 +1,226 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREAMBLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The following two commands will generate a PDF that follows all the requirements for submission
+% and peer review.  Uncomment these commands to generate this output (and comment out the two lines below.)
+%
+% DOUBLE SPACE VERSION FOR SUBMISSION TO THE AMS2
+
+\documentclass[12pt,varwidth]{article}
+\usepackage{ametsoc}
+%\usepackage{ametsoc2col}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage[%
+  color=gray
+ ,scale=4
+]{background}
+
+\backgroundsetup{contents={DRAFT}}
+%\usepackage[mathlines]{lineno} 
+%
+% The following two commands will generate a single space, double column paper that closely
+% matches an AMS journal page.  Uncomment these commands to generate this output (and comment
+% out the two lines above. FOR AUTHOR USE ONLY. PAPERS SUBMITTED IN THIS FORMAT WILL BE RETURNED
+% TO THE AUTHOR for submission with the correct formatting.
+%
+% TWO COLUMN JOURNAL PAGE LAYOUT FOR AUTHOR USE ONLY
+%%%%\documentclass[10pt]{article}
+%%%%\usepackage{ametsoc2col}
+% new commands
+\newcommand{\xmathbf}{\boldsymbol}
+\def\cam{CAM4}
+\def\deg{$^\circ$ }
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
+%
+% Enter your Abstract here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\myabstract}{The Community Atmosphere Model, version 4 (CAM4) }
+
+\begin{document}
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE
+%
+% Enter your TITLE here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{\large{Atmosphere High Pressure Blocking Metrics in Multiple Versions of the Community Earth System Model (CESM)}}}
+%
+% Author names, with corresponding author information. 
+% [Update and move the \thanks{..} block as appropriate.]
+%
+\author{\textsc{Richard B. Neale}
+				\thanks{\textit{Corresponding author address:} 
+				Dr. Richard B. Neale, National Center for Atmospheric Research, 
+				P.O. Box 3000, Boulder, CO 80307. 
+				\newline{E-mail: rneale@ucar.edu}},\quad\textsc{Cecile Hannay} and\quad\textsc{Jadwiga Richter}\\
+\textit{\footnotesize{National Center for Atmospheric Research, Boulder Colorado}}
+}
+%
+% Formatting done here...Authors should skip over this.  See above for abstract.
+\ifthenelse{\boolean{dc}}
+{
+\twocolumn[
+\begin{@twocolumnfalse}
+\amstitle
+
+% Start Abstract (Enter your Abstract above.  Do not enter any text here)
+\begin{center}
+\begin{minipage}{13.0cm}
+\begin{abstract}
+	\myabstract
+	\newpage
+	\begin{center}
+		\rule{38mm}{0.2mm}
+	\end{center}
+\end{abstract}
+\end{minipage}
+\end{center}
+\end{@twocolumnfalse}
+]
+}
+{
+\amstitle
+\linenumbers
+\begin{abstract}
+\myabstract
+\end{abstract}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN BODY OF PAPER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+Introduction
+
+\section{Section 1}
+
+A number of modifications have been implemented in CAM4, the most impactful of which are summarized below. A more comprehensive description of CAM4 can be found in \citet{CAM4_TN}.
+
+\subsection{Blocking Diagnostics}
+\subsubsection{Frequency}
+\subsubsection{Strength}
+
+\subsection{Period Length}
+
+\subsection{Composite Events}
+Knowing the distribution of blocking and baroclinic strength as shown in \label{} we are able to evaluate composite events based on the an average of the top (blocked) and bottom (baroclinic) 10\% Z500 strength days for each mean blocking maximum region (European and Pacific blocking centers).In Winter all model versions are able to capture the Western zonal extent of the composite Z500 block pattern, this is despite gettting the frequency of these blocking events correct. The models correctly reprduce associated l
+
+-Remember these composites only show what the top/bottom percentile events look like not they are stronger or occur more frequently in CAM5/MAM for example. But maybe one would expect CAM5 in winter to have a stronger spring pattern?
+
+-Both baroclinic and barotropic composite anomalies are of equal strength at zero lag, but blocking anomalies remain much larger at -/+ 5 days indicating the longer persistance of blocking events in both observations and all versions of CAM.
+
+-In CAM the blocking centers seem to grow and decay in situ over the European region five days prior to and following the lag-zero blcoking. This is in contrast to ERAI where the blocking center is located in the central Atlantic five days prior to the zero lag day and then decays in-situ north of the UK.
+
+-REMEMBER: Blocking improves in MAM, not so much in DJF, so there should not really be an expectation of differences in DJF really.
+
+-In DJF the strongest circulation features over the USA are seen with a lag of -3 days. This is not 
+
+
+\section{Conclusions}
+
+
+\begin{acknowledgment} 
+Support of this research project.
+\end{acknowledgment}
+
+
+\nolinenumbers
+% Use appendix}[A], {appendix}[B], etc. etc. in place of appendix if you have multiple appendixes.
+%\ifthenelse{\boolean{dc}}
+{}
+{\clearpage}
+%\begin{appendix}
+%\section*{\begin{center}Appendix Title Is Entered Here (Primary heading)\end{center}}
+%\subsection{First appendix secondary heading}
+
+%\subsection{Second appendix secondary heading}
+
+%\subsubsection{First appendix tertiary heading}
+
+%\subsubsection{Second appendix tertiary heading}
+
+%\paragraph{First appendix quarternary heading}
+
+%\paragraph{Second appendix quarternary heading}
+
+%\end{appendix}
+
+% Create a bibliography directory and place your .bib file there.
+\ifthenelse{\boolean{dc}}
+{}
+{\clearpage}
+\bibliographystyle{./refs/ametsoc}
+\bibliography{./refs/references}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIGURES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[t]
+  \begin{center}
+    \noindent\includegraphics[width=1.0\textwidth,angle=0.]{./figs/f_bfreq.epsi}\\
+  \end{center}
+  \caption{Seasonal averages of daily blocking frequency (1979-1999) and +/- 1 standard deviation (\%) for ensembles of CAM3, CAM4 and CAM5.3 for (a) Dec/Jan/Feb, (b) Mar/Apr/May, and (c) Jun/Jul/Aug } 
+\label{f_bfreq}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[t]
+  \begin{center}
+    \noindent\includegraphics[width=0.55\textwidth,angle=90.]{./figs/f_2d_block.epsi}\\
+  \end{center}
+  \caption{2-dimensional seasonal average blocking frequency (1979-1999) for Dec/Jan/Feb (top row) and Mar/Apr/May (bottom) row. ERA-interim is shown in (a) and (e) and model biases are shown for CAM3 (b,f), CAM4 (c,g) and CAM5.3 (d,h).} 
+\label{f_2d_block}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[t]
+  \begin{center}
+    \noindent\includegraphics[width=1.0\textwidth,angle=0.]{./figs/f_block_pdf.epsi}\\
+  \end{center}
+  \caption{PDF of regional daily blocking strength in CAM (1979-1999) for Dec/Jan/Feb (top row) and Mar/Apr/May (bottom) row. Individual regions are defined by the domains in Fig. \ref{f_2d_block}.}
+\label{f_block_pdf}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[t]
+\caption{Summary details of the CAM and CCSM experiments analyzed using CAM3, CAM4 and intermediate development model versions.}\label{t1}
+\begin{center}
+\begin{tabular}{cccccrrcrc}
+\hline\hline
+$Name$ & $Description$ &$SST$ & $Analysis Period$ \\
+\hline
+CAM3 (T42)       & Spectral low-resolution                         & AMIP     & 1981-2000  \\
+CAM3 (T85)       & Spectral high-resolution                        & AMIP     & 1981-2000  \\
+CAM3 (2\deg)     & FV low-resolution                               & AMIP     & 1980-1999  \\
+CAM3-DIL (2\deg) & FV + CAPE dilution                              & AMIP     & 1980-1999  \\
+CAM3-CMT (2\deg) & FV + convective momentum transports             & AMIP     & 1980-1999  \\
+CAM3-CONV (2\deg)& FV + convective changes (CMT+DIL)               & AMIP     & 1980-1999  \\
+CAM3.5 (2\deg)   & Interim CAM release: \citep{CCSM3.5}            & AMIP     & 1979-2005  \\
+                 & FV-CONV+freeze drying+cloud fraction update     &          &            \\
+CAM4 (2\deg)     & FV low-resolution                               & AMIP     & 1981-2000  \\
+CAM4 (1\deg)     & FV high resolution                              & AMIP     & 1981-2000  \\
+\hline
+CCSM3 (T85)      & Spectral high-resolution                        & Coupled  & 1970-1999  \\
+CCSM4 (2\deg)    & FV low-resolution                               & Coupled  & 1970-1999  \\
+CCSM4 (1\deg)    & FV high-resolution                              & Coupled  & 1970-1999  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+%
+\end{document}

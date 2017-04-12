@@ -1,0 +1,27 @@
+\begin{figure}[t]
+  \begin{center}
+    \noindent\includegraphics[width=1.0\textwidth,angle=0.]{./figs/f_bfreq.epsi}\\
+  \end{center}
+  \caption{Seasonal averages of daily blocking frequency (1979-1999) and +/- 1 standard deviation (\%) for ensembles of CAM3, CAM4 and CAM5.3 for (a) Dec/Jan/Feb, (b) Mar/Apr/May, and (c) Jun/Jul/Aug }
+\label{f_bfreq}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[t]
+  \begin{center}
+    \noindent\includegraphics[width=0.55\textwidth,angle=90.]{./figs/f_2d_block.epsi}\\
+  \end{center}
+  \caption{2-dimensional seasonal average blocking frequency (1979-1999) for Dec/Jan/Feb (top row) and Mar/Apr/May (bottom) row. ERA-interim is shown in (a) and (e) and model biases are shown for CAM3 (b,f), CAM4 (c,g) and CAM5.3 (d,h).}
+\label{f_2d_block}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[t]
+  \begin{center}
+    \noindent\includegraphics[width=1.0\textwidth,angle=0.]{./figs/f_block_pdf.epsi}\\
+  \end{center}
+  \caption{PDF of regional daily blocking strength in CAM (1979-1999) for Dec/Jan/Feb (top row) and Mar/Apr/May (bottom) row. Individual regions are defined by the domains in Fig. \ref{f_2d_block}.}
+\label{f_block_pdf}
+\end{figure}
+\efloatseparator
+ 

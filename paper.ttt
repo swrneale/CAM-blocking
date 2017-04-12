@@ -1,0 +1,27 @@
+\begin{table}[t]
+\caption{Summary details of the CAM and CCSM experiments analyzed using CAM3, CAM4 and intermediate development model versions.}\label{t1}
+\begin{center}
+\begin{tabular}{cccccrrcrc}
+\hline\hline
+$Name$ & $Description$ &$SST$ & $Analysis Period$ \\
+\hline
+CAM3 (T42)       & Spectral low-resolution                         & AMIP     & 1981-2000  \\
+CAM3 (T85)       & Spectral high-resolution                        & AMIP     & 1981-2000  \\
+CAM3 (2\deg)     & FV low-resolution                               & AMIP     & 1980-1999  \\
+CAM3-DIL (2\deg) & FV + CAPE dilution                              & AMIP     & 1980-1999  \\
+CAM3-CMT (2\deg) & FV + convective momentum transports             & AMIP     & 1980-1999  \\
+CAM3-CONV (2\deg)& FV + convective changes (CMT+DIL)               & AMIP     & 1980-1999  \\
+CAM3.5 (2\deg)   & Interim CAM release: \citep{CCSM3.5}            & AMIP     & 1979-2005  \\
+                 & FV-CONV+freeze drying+cloud fraction update     &          &            \\
+CAM4 (2\deg)     & FV low-resolution                               & AMIP     & 1981-2000  \\
+CAM4 (1\deg)     & FV high resolution                              & AMIP     & 1981-2000  \\
+\hline
+CCSM3 (T85)      & Spectral high-resolution                        & Coupled  & 1970-1999  \\
+CCSM4 (2\deg)    & FV low-resolution                               & Coupled  & 1970-1999  \\
+CCSM4 (1\deg)    & FV high-resolution                              & Coupled  & 1970-1999  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\efloatseparator
+ 

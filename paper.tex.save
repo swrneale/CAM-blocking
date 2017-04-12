@@ -1,0 +1,422 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREAMBLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The following two commands will generate a PDF that follows all the requirements for submission
+% and peer review.  Uncomment these commands to generate this output (and comment out the two lines below.)
+%
+% DOUBLE SPACE VERSION FOR SUBMISSION TO THE AMS
+
+\documentclass[12pt]{article}
+\usepackage{ametsoc}
+%\usepackage{ametsoc2col}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage[mathlines]{lineno} 
+%
+% The following two commands will generate a single space, double column paper that closely
+% matches an AMS journal page.  Uncomment these commands to generate this output (and comment
+% out the two lines above. FOR AUTHOR USE ONLY. PAPERS SUBMITTED IN THIS FORMAT WILL BE RETURNED
+% TO THE AUTHOR for submission with the correct formatting.
+%
+% TWO COLUMN JOURNAL PAGE LAYOUT FOR AUTHOR USE ONLY
+%%%%\documentclass[10pt]{article}
+%%%%\usepackage{ametsoc2col}
+% new commands
+\newcommand{\xmathbf}{\boldsymbol}
+\def\cam{CAM4}
+\def\deg{$^\circ$ }
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
+%
+% Enter your Abstract here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\myabstract}{The Community Atmosphere Model, version 4 (CAM4) was released as part of the Community Climate System Model (CCSM4). The finite volume (FV) dynamical core is now the default due to its superior transport and conservation properties. Deep convection parameterization changes include a dilute plume calculation of convective available potential energy (CAPE) and the introduction of Convective Momentum Transport (CMT). An additional cloud fraction calculation is now performed following macrophysical state updates to provide improved thermodynamic consistency. A freeze-drying modification is further made to the cloud fraction calculation in very dry environments (e.g., the Arctic), where cloud fraction and cloud water values were often inconsistent in CAM3. In CAM4 the FV dynamical core further degrades the excessive trade-wind simulation, but reduces zonal stress errors at higher latitudes. Plume dilution alleviates much of the mid-tropospheric tropical dry biases and reduces the persistent monsoon precipitation biases over the Arabian peninsular and the southern Indian ocean. CMT reduces much of the excessive trade-wind biases in eastern ocean basins. CAM4 shows a global reduction in cloud fraction compared to CAM3, primarily due to the freeze drying and improved cloud fraction equilibrium modifications. Regional climate feature improvements include the propagation of stationary waves from the Pacific into mid-latitudes and the seasonal frequency of Northern Hemisphere blocking events. A 1\deg versus 2\deg horizontal resolution of the FV dynamical core exhibits superior improvements in regional climate features of precipitation and surface stress. Improvements in the fully coupled mean climate between CAM3 and CAM4 are also more substantial than in forced Sea Surface Temperature (SST) simulations.}
+
+\begin{document}
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE
+%
+% Enter your TITLE here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{\large{The mean climate of the Community Atmosphere Model (CAM4) in forced SST and fully coupled experiments}}}
+%
+% Author names, with corresponding author information. 
+% [Update and move the \thanks{...} block as appropriate.]
+%
+\author{\textsc{Richard B. Neale}
+				\thanks{\textit{Corresponding author address:} 
+				Dr. Richard B. Neale, National Center for Atmospheric Research, 
+				P.O. Box 3000, Boulder, CO 80307. 
+				\newline{E-mail: rneale@ucar.edu}},\quad\textsc{Jadwiga Richter}, \quad\textsc{Sungsu Park}, \\ and \quad\textsc{Peter H. Lauritzen}\\
+\textit{\footnotesize{National Center for Atmospheric Research, Boulder Colorado}}
+\and 
+\centerline{\textsc{Stephen J. Vavrus}}\\% Add additional authors, different institution
+\centerline{\textit{\footnotesize{Center for Climatic Research, University of Wisconsin-Madison}}}\\
+\centerline{\textsc{Philip J. Rasch}}\\% Add additional authors, different institution
+\centerline{\textit{\footnotesize{Pacific Northwest National Laboratory, Richland, Washington}}}\\
+\centerline{\textsc{Minghua Zhang}}\\% Add additional authors, different institution
+\centerline{\textit{\footnotesize{School of Marine and Atmospheric Sciences, Stony Brook University, New York}}}\\
+}
+%
+% Formatting done here...Authors should skip over this.  See above for abstract.
+\ifthenelse{\boolean{dc}}
+{
+\twocolumn[
+\begin{@twocolumnfalse}
+\amstitle
+
+% Start Abstract (Enter your Abstract above.  Do not enter any text here)
+\begin{center}
+\begin{minipage}{13.0cm}
+\begin{abstract}
+	\myabstract
+	\newline
+	\begin{center}
+		\rule{38mm}{0.2mm}
+	\end{center}
+\end{abstract}
+\end{minipage}
+\end{center}
+\end{@twocolumnfalse}
+]
+}
+{
+\amstitle
+\linenumbers
+\begin{abstract}
+\myabstract
+\end{abstract}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN BODY OF PAPER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+The Community Atmosphere Model, version 4 (CAM4) is the seventh generation atmospheric general circulation model (AGCM) developed with significant community collaboration at the National Center for Atmospheric Research (NCAR). CAM4 comprises the atmosphere component of the Community Climate System Model version 4 \citep[CCSM4, ][]{CCSM4_oview}. For the first time CAM is fully integrated into the coupled CCSM4 system using either data or thermodynamic components of surface models for forced SST and slab ocean model (SOM) runs or interactive versions of the same surface models for full climate system experiments. The same surface components updated in CCSM4 are also included, when appropriate, in CAM4 simulations \citep[e.g., CLM and CICE, ][]{CCSM4_oview}. CAM4 includes moderate changes in model configuration compared to CAM3 \citep{CAM3}, but exhibits significant changes and improvements in climate compared to CAM3. This article summarizes the improvements seen in the seasonally varying mean atmospheric climate of prescribed-SST and fully coupled simulations. The dominant changes made to the model configuration involve the parameterization of deep convection.  These changes have a significant impact on improving the pattern of long-standard tropical errors such as the El Ni\~{n}o Southern Oscillation \citep[ENSO, ][]{Deser11} and the Madden Julian Oscillation \citep[MJO, ][]{Subraminian11} . A further change for CAM4 has been to increase the horizontal resolution of the model from T85 (nominally 1.4$^\circ$ at the equator) to a regular 1$^\circ$ grid with the finite volume (FV) dynamical core. In addition to the default version of CAM4 using the FV dynamical core (CAM4-FV), an alternate dynamical core using an nominally unstructured grid is also available in CAM4. This is the first time an unstructured grid has been made available in CAM and is based upon High Order Method Model Environment \citep[HOMME, ][]{CAM_SE} spectral element methods. Initial simulations using this dynamical core option (CAM4-SE) demonstrate comparable skill to CAM4-FV \citep{CAM4_SE,Mishra11}.
+
+This paper documents changes to physical parameterization formulations in CAM4 and highlights their dominant impact in SST-forced and fully coupled experiments. Section 2 describes the changes made to physics and dynamics formulations since CAM3. Section 3 presents a summary of model simulations examined and observational data used. Section 4 summarizes explicit climate changes related to model changes between CAM3 and CAM4 and section 5 details improvements in more general aspects of the model climate in prescribed-SST and fully coupled experiments. Conclusions are presented in section 6.
+
+
+\section{Overview of Model Formulation and Dataset Changes}
+
+A number of modifications have been implemented in CAM4, the most impactful of which are summarized below. A more comprehensive description of CAM4 can be found in \citet{CAM4_TN}.
+
+\subsection{Dynamical Core and Resolution Changes}
+The FV dynamical core, available as an option in CAM3 \citep{Lin96,Lin04}, is now the default option in CAM4. This is primarily due to the improved tracer transport capabilities highlighted in CAM3 age-of-air experiments \citep{Rasch06} and its relevance to a growing range of chemistry applications \citep[e.g., MOZART, ][]{MOZART}. Initial CAM4 development experiments focused on a 1.9\deg latitude by  2.5\deg longitude resolution, but idealized aqua-planet experiments show that a resolution of 0.9\deg x 1.25\deg is required in order to provide an equivalent resolution to the CAM3 T85 spectral core configuration \citep{Williamson08}. Therefore, 0.9\deg x 1.25\deg is the default resolution for most CAM4 applications. The 1.9\deg x  2.5\deg resolution is still used for more computationally intensive applications such as WACCM \citep{WACCM4} and CAM chemistry \citep[e.g.,][]{FASTCHEM, CAMCHEM}. For CAM4 the default number of levels remains at 26 due to an undesirable non-convergent response from boundary layer and shallow convection interactions when levels were significantly increased \citep{Williamson09}.
+
+ Due to the presence of grid-scale noise and excessive polar night jets two new filtering/diffusion operators have been implemented in CAM4-FV \citep{Lauritzen11}. First, a fourth-order divergence damping operator has been added to optionally replace the second-order version used in CAM3-FV. In general, it provides a more scale selective dissipation of divergent modes \citep{Whitehead11} that can generate grid-scale noise in CAM-FV if not damped properly.  Second, a Laplacian-type damping operator has been implemented to increase the explicit momentum dissipation in the top-of-atmosphere sponge layers. This helps control the excessive polar night jets that have been observed in higher resolution CAM-FV simulations. Further minor modifications harmonize the critical Froude number value between CAM and WACCM. The critical Froude number controls the initiation of orogaphic gravity wave generation and breaking in CAM, and the increase in its value from 0.5 to 1.0 has only a minor climate impact on the CAM simulation.
+
+
+\subsection{Deep Convection}
+The application of the deep convection parameterization in CAM4 continues to be based upon the bulk mass flux scheme of \citet{Zhang95} (ZM scheme). One addition and one significant modification have been made to the ZM scheme and are summarized below.
+
+\subsubsection{Convective Plume Dilution}
+In CAM3 the closure of the ZM scheme uses a calculation of Convective Available Potential Energy (CAPE) based on a reference ascending air parcel that does not entrain with its grid mean environment. This Undilute CAPE (UCAPE) approximation exhibits limited sensitivity to free-troposphere humidity variations and excessive sensitivity to near-surface humidity and temperature variations \citep{Zhang09}. As such the deep convective response in CAM3 was strongly coupled to diurnal variations over land and SST variations over ocean \citep{Williamson08}. To address these shortcomings the UCAPE calculation was replaced by a Dilute CAPE (DCAPE) calculation based on the mixing models of \citet{Raymond86,Raymond92}. The calculation of UCAPE based on the conservation of moist potential temperature $\theta_e$ is replaced with a mixing model based on the conservation of moist entropy including liquid water. 
+
+ 
+The conserved variable is 
+\begin{equation}
+s = (C_{pd}+q_TC_L)ln\left(\frac{T}{T_R}\right)-R_0ln\left(\frac{p_D}{p_R}\right )+L\frac{q_v}{T}-q_vR_vln\frac{q_v}{q_s}
+\end{equation}
+where $C_{pd}$ and $C_L$ are the specific heat at constant pressure for dry air and the specific heat for liquid water respectively, $R_D$ is the dry air gas constant, $T$ is absolute temperature and $P_D$ the partial pressure of dry air. $q_v$, $q_T$ and $q_s$ are the vapor, total water and saturated mixing ratios respectively.  Reference quantities are $T_R = 273.15$ K and $P_R = 1000$ hPa.
+While this quantity is conserved in reversible adiabatic processes it is continually mixed with the equivalent value of moist entropy in the environment, $s_E$ according to a constant entrainment rate $\epsilon$ such that
+
+\begin{equation}
+s^k = (1-\epsilon)s^{k+1}+\epsilon s_E^{k+1}
+\end{equation}
+where $k$ is model level increasing downwards. A constant value of $\epsilon$=1 km$^{-1}$ is used globally which is a typical value of entrainment used to represent shallow convecting clouds. Larger values  of $\epsilon$ tend to inhibit deep convection and moisten the lower troposphere too much, while higher values exhibit a response that retains the lack of moisture sensitivity seen in CAM3. The vertical profiles of $T$, $q_v$ and $q_t$ in the assumed convecting parcels are derived from a simple inversion of $s$ and are then used for the calculation of buoyancy, total CAPE and triggering CAPE as in CAM3. The DCAPE calculation was first used in simulations using the interim CAM3.5 release \citep{Neale08,CCSM3.5}.
+
+\subsubsection{Convective Momentum Transports}
+Sub-grid scale Convective Momentum Transports (CMT) have been added to
+the existing deep convection parameterization following \citet{Richter08} and the
+methodology of \citet{Gregory97}. The sub-grid scale convective transport of momentum can be cast in the same manner as for humidity and static energy. Expressing the grid mean horizontal velocity vector, $\xmathbf{V}$, tendency due to deep convection transport following \citet{Kershaw97} gives
+\begin{linenomath*}
+\begin{align}
+\left( \frac{\partial \xmathbf{V}}{\partial t} \right)_{cu} &=
+- \frac{1}{\rho} \frac{\partial}{\partial z} \left(
+M_u \xmathbf{V}_u + M_d \xmathbf{V}_d - M_c \xmathbf{V} \right)  \label{cmt.1}
+~,\end{align}
+\end{linenomath*}
+where the cumulus mass flux is $M_c=M_u+M_d$. Neglecting the contribution from the environment the updraft and downdraft budget equation can similarly be written as 
+\begin{linenomath*}
+\begin{eqnarray}
+-\frac{\partial}{\partial z} \left ( M_u  \xmathbf{V}_u \right ) &=& E_u  \xmathbf{V}-D_u\xmathbf{V}_u  + \xmathbf{P}^u_G \label{cmt.2}  \\
+-\frac{\partial}{\partial z} \left ( M_d  \xmathbf{V}_d \right ) &=& E_d \xmathbf{V} + \xmathbf{P}^d_G \label{cmt.3}
+~,\end{eqnarray}
+\end{linenomath*}
+where $\xmathbf{P}^u_G$ and $\xmathbf{P}^d_G$ are the updraft and downdraft pressure gradient sink terms parameterized from \citet{Gregory97} as 
+\begin{eqnarray}
+\xmathbf{P}^u_G   &=& -C_u M_u\frac{\partial \xmathbf{V}}{\partial z} \label{cmt.4} \\
+\xmathbf{P}^d_G   &=& -C_d M_d\frac{\partial \xmathbf{V}}{\partial z}. \label{cmt.5}
+\end{eqnarray}
+
+$C_u$ and $C_d$ are tunable parameters. In the {\cam} implementation we use $C_u = C_d = 0.4$. The value of $C_u$ and $C_d$ control the strength of convective momentum transport. As these coefficients increase so do the pressure gradient terms, and convective momentum transport decreases.
+
+\subsection{Cloud Fraction}
+\subsubsection{Freeze Drying}
+In CAM3 polar winter-time cloud fraction was severely overestimated when compared with existing estimates available prior to the availability of CLOUDSAT data. This overestimation was diagnosed to be acute during northern hemisphere Winter. The relative humidity based cloud fraction scheme of \citet{Zhang03} allowed high cloud fractions to be produced even in the presence of very low values of ambient specific humidity $q_{v}$. A remedy to this feature is implemented into CAM4 following \citet{Vavrus08}. During periods of very dry conditions in the lower troposphere (at pressures below 700 hPa) a modification is made to the relative humidity cloud fraction calculation $C^0_{low}$.
+\begin{equation}
+C_{low}=C^0_{low}max(0.15,min(1,\cfrac{q_{v}}{0.003}) )
+\end{equation}
+ This adjustment in dry conditions significantly moderates the winter-time Arctic cloud fraction and results in a more accurate seasonal variation in low-cloud cover \citep{Vavrus08}.  
+
+
+\subsubsection{Consistent cloud fraction calculation}
+
+In order to prevent inconsistent values of total cloud fraction and condensate being passed to the radiation parameterization in CAM4 a second updated cloud fraction calculation is performed. Cloud fraction and therefore relative humidity are now thermodynamically consistent with condensate values on entry to the radiation parameterization. This vastly reduces the frequency of empty clouds seen in the CAM3, where cloud condensate was zero and yet cloud had been diagnosed to exist due to an inconsistent relative humidity. This modification greatly reduced low-cloud fraction over Asia and north America during winter time, and by enhancing upward long-wave radiation emitted from the surface to the free atmosphere, positive biases of near surface air temperature was also substantially reduced. These had been long-standing biases in CAM3. In addition, variation of cloud fraction and in-cloud condensate becomes more consistent as detailed in \citet{Park12}.
+
+\subsubsection{Aerosol Changes}
+New consistent gridded emissions of reactive gases and aerosols for use in chemistry model simulations and needed by climate models for the Climate Model Intercomparison Program (CMIP5) in support of the Intergovernmental Panel on Climate Change (IPCC) Fifth Assessment report (AR5) are now available using the TROP-MOZART framework in CAM \citep{Lamarque00}. These datasets are used to drive the 20th century historical simulations analyzed here.
+
+\subsubsection{Other Changes}
+There have been a number of other changes between CAM3 and CAM4 that have an impact on the climate simulations. Chief among these is the specification of a new solar irradiance dataset. Figure \ref{f_solin} shows the evolution of the seasonal change in the distribution of solar insolation at the top of the model. From CAM3 to CAM3.5 the reference orbital year was updated to 1990 from 1950 to be more accurate for late 20th century simulations. This had a global impact of +0.2 Wm$^{-2}$. A larger change to CAM4 was the transition to the more recent \citet{Lean05} total solar irradiance dataset based on the Total Irradiance Monitor (TIM) on NASA's Solar Radiation and Climate Experiment (SORCE). This new estimate of total solar irradiance was around 1365.4 Wm$^{-2}$, more than 4.6 Wm$^{-2}$ lower than the dataset used in CAM3. This translates to a reduction in top of atmosphere average incoming insolation of 1.1 Wm$^{-2}$ in CAM4 which is concentrated at summer-time high latitudes. 
+
+Finally, there was an effective reduction made in the fall velocity of ice cloud particles at the lower 2\deg resolution in CAM4. This was to facilitate the development of the Whole Atmosphere Community Climate Model \citep[WACCM4, ][]{WACCM4} in order to provide a more realistic source of upper tropospheric water vapor that could be transported into the lower stratosphere and alleviate significant dry biases there.
+
+\section{Experiment and Observational Data}
+
+\subsection{Model Simulations}
+Two different types of integrations are analyzed; prescribed SST (CAM) and fully coupled (CCSM) experiments. All experiments are summarized in Table \ref{t1}
+\subsubsection{Forced Experiments}
+The configuration for CAM experiments consists of fully interactive atmosphere and Community Land Model (CLM) components. A data ocean model is used that allows prescribed Sea Surface Temperatures (SSTs) and a version of the Community Sea Ice Model (CICE) in thermodynamic-only mode where ice extent is prescribed from observations and ice-thickness is specified. The prescribed SSTs and sea-ice properties are derived from the Atmosphere Model Intercomparison Project \citep[AMIP, ][]{Taylor01}, whereby linearly interpolated daily values are obtained from adjusted monthly average datasets that maintain the observed monthly means as near as possible. These experiments begin in 1979 and extend into 2009.
+  
+\subsubsection{Fully Coupled Experiments}
+More comprehensive experiments are analyzed where a fully interactive version of the Parallel Ocean Program (POP) model and CICE are used in experiments. These experiments are begun from a fully interactive coupled model integration that has a near-zero energy imbalance at the top of the atmosphere and has been subject to a multi-centennial spin-up period when subject to pre-industrial (circa 1850) major climate forcings.
+
+
+
+\subsubsection{Observational Data}
+Comparisons are made to standard observational satellite, in-situ and reanalysis datasets including ERA15 \citep{ERA15}, ERA40 \citep{ERA40}, ERA-interim \citep{ERA-I}, the NASA Modern Era Retrospective-Analysis for Research and Applications \citep[MERRA, ][]{MERRA}, the Japanese 25-year Reanalysis \citep[JRA25, ][]{JRA25} and the NCEP-DOE AMIP II reanalysis \citep[R-2, ][]{NCEP2}. NASA Clouds and the Earth's Radiant Energy System; Energy Balanced and Filled \citep[CERES-EBAF, ][]{CERES-EBAF} and Earth Radiation Budget Experiment  \citep[ERBE, ][]{ERBE} are used for top of atmosphere radiative fields. For precipitation we compare with the Global Precipitation Climatology Project \citep[GPCP, ][]{GPCP}, the CPC Merged Analysis of Precipitation \citep[CMAP, ][]{CMAP} and the Tropical Rainfall Measuring Mission  \citep[TRMM, ][]{TRMM} 3B42 product. For cloud quantities we compare to a combined CloudSat space-borne radar and CALIPSO space-borne lidar cloud fraction dataset \citep[CLOUDSAT, ][]{CLOUDSAT} and the International Satellite Cloud Climatology Project \citep[ISCCP, ][]{ISCCP} product as well as WARREN \citep{WARREN} ground based observations. For surface stresses we compare with scatterometer winds from ERS \citep{ERS-1}. Finally, vertical profiles derived from radiosonde climatologies are provided from the Rawindsonde Observation (RAOBS) network \citep{Peterson97}. A comprehensive description of the observational datastes used is provided by NCAR's climate data guide (http://climatedataguide.ucar.edu/).
+
+
+\section{Dominant Impacts of individual model changes}
+\subsection{Finite Volume Dynamical Core}
+\citet{Lauritzen10} carefully compare the performance of CAM3 and CAM4 dynamical cores in dry idealized experiments. However, it is difficult to directly address the impact on the climate simulation of changing from the spectral to the FV dynamical core since we are comparing changes in numerics, algorithms, nominal resolution and coupling to the physical parameterizations. Figure \ref{f_taux_zm} shows the zonally averaged zonal surface stress biases comparing different dynamical core and development versions from CAM3 to CAM4. Different resolutions using the spectral dynamical core largely show more similarities with each other than with a 2\deg FV resolution. Excessive tropical seasonal monsoonal westerly flow biases are also present (not shown), but in the annual mean they are small and common to the two dynamical cores. Further poleward to around 50\deg FV surface stresses are consistently lower than with the spectral dynamics. These changes lead to a detrimental overestimate of trade-wind strength in the sub-topics in the FV transition models with a beneficial reduction in mid-latitude westerlies poleward of around 40\deg, particularly in the southern hemisphere. The excessive easterly trade winds are consistent with a stronger Hadley circulation and Inter-tropical Convergence Zone (ITCZ) seen with the inclusion of the FV dynamical core. These surface stress differences have strong implications for the coupled climate and this is discussed in a later section. 
+
+
+\subsection{Dilute CAPE (DCAPE)}
+The inclusion of DCAPE in the model has a significant impact on the partitioning of parameterized convective rainfall and resolved stratiform rainfall. Figure \ref{f_pratio} shows that CAM3 has a stratiform contribution to tropical rainfall that is below 20\% throughout most of the precipitating tropics. This would seem to be low given existing TRMM estimates ranging between 35\% and 55\% \citep{Dai06}. The largest impact on increasing the ratio of resolved tropical precipitation comes from the inclusion of DCAPE. This results in an increase in averaged resolved precipitation by around 6.5\% and accounts for most of the increase in resolved precipitation fraction ultimately seen in the CAM4 climate. Doubling resolution in CAM from 2\deg to 1\deg has the effect of increasing resolved precipitation by a few percent, but this is small compared to effects of DCAPE. Using an entraining parcel in CAM4 has the obvious impact of reducing the efficiency of UCAPE consumption and allowing resolved scale moistening to provide more of the tropical precipitation. Given the lack of explicit knowledge regarding the grid in the ZM formulation it cannot respond to increases in resolution, whereas the stratiform precipitation is able to respond to the more rapid saturation at finer grid scales and again contribute more to the tropical precipitation total, particularly in the Central and East Pacific ITCZ which intensifies in CAM at 1\deg.  A shift in the thermodynamic structure of the model is also seen with the inclusion of DCAPE. Figure \ref{f_raobs} shows a lower tropospheric dry bias and upper tropospheric moist bias were prevalent in the precipitating tropics in CAM3. \citet{Williamson08} use forecast experiments to show the UCAPE approximation in CAM3 is much too stabilizing in the upper troposphere with a significant high bias in moist static energy. The consequences of this response is a rapid transition (within 1-2 days) to a dry and warm free troposphere. Including DCAPE provides a much more realistic vertical structure in the conditionaly unstable tropics. Explicit entrainment in DCAPE throttles convection in an equilibrium time-mean sense since it is much more inefficient at stablizing the troposphere. This behavior mixes more humidity into the boundary layer and lower troposphere as well as maintaining moisture levels in the upper troposphere. Stability-wise moist static energy is decreased in the upper troposphere and increased in the lower-troposphere, thus raising the level of the moist static energy minimum. The location of this level is crucial in the functioning of the ZM convection scheme as it determines the first level at which both ascending convective plumes detrain and the downdraft plumes begin. A more realistic vertical structure is thus seen in CAM with the inclusion of DCAPE.
+
+This vertical change in deep convection activity with DCAPE can be seen from the convective tendencies in Figure \ref{f_zmtend}. CAM3 ZM heating tendencies maximize in a deep layer of the ITCZ from 850 to 500 hPa and drying tendencies occur at all levels in the deep tropics with a maximum in the boundary layer. With the inclusion of DCAPE in CAM3-DIL, heating tendencies are reduced both in the boundary layer and the upper troposphere, consistent with a reduced convective precipitation contribution. More relevant to the tropical atmosphere is an increase in drying in the mid-troposphere accompanied by decreases in the boundary layer drying and a marginal source of moisture in the upper-troposphere. These moisture tendency shifts are consistent with the improved vertical moisture distribution seen in CAM3-DIL and CAM4.  
+
+\subsection{Convective Momentum Transports}
+The incremental impact of including CMT is documented in \citet{Richter08}. They show a marginal improvement in the Hadley circulation with weakening of the northern upward branch and strengthening of the southern upward branch in DJF. The Hadley circulation and associated trade-wind changes are reflected in the zonally averaged surface stresses of Figure \ref{f_taux_zm} where the CAM3-CMT simulation has the greatest reduction in surface easterly stress bias of all the development model versions. However, the development model of CAM3-DIL appears to show the greatest reduction in the mid-latitude surface westerly stresses, and represents the largest part of the improvements between CAM3 and CAM4 due to a physics change. These improvements in high latitude stress are identified in response to more realistic West Pacific tropical heating locations and stationary wave response in the southern hemisphere in particular. As with the DCAPE and CMT changes working in concert to enhance the tropical intraseaonal variability \citep{Neale08} they also combine to have a further positive impact on reducing the westerly stresses in the Northern hemisphere in the CAM3-CONV development model simulation.
+
+\subsection{Freeze-drying, Cloud fraction and Cloud Radiative Forcing}
+
+The application of the new convection changes, the inclusion of freeze drying processes and the improved equlibrium cloud state all lead to changes in the latitudinal distribution of cloud fraction and associated cloud radiative forcings. Figure \ref{f_cloud_zm} shows significant decreases in both total and low cloud fraction from CAM3 to CAM4. The most significant decreases are over northern hemisphere mid- to high-latitude regions in the transition from CAM3-DIL to CAM3.5 model versions. The differences can be attributed to the freeze-drying which dominates Arctic low cloud in winter-time and the improved cloud equilibrium state, which dominates changes in mid-latitudes. The implementation of freeze-drying was motivated by the observed excess of low cloud as seen in surface-based observations and satellite measurements (including ISCCP). CLOUDSAT observations were only available later in the period and indicated the excess in polar low cloud was not as severe. Cloud reductions in CAM4 within the tropics and sub-tropics are much lower than at higher latitudes. The inclusion of DCAPE appears to account for most of this reduction (although the response is largely a redistribution in the vertical) with a further minor reduction from the new equilibrium cloud fraction calculation in CAM3.5. There does however appear to be significant dependencies of cloud fraction on model resolution. In CAM3 T85 has systematically less cloud than T42 in the extra-tropics and polar regions. In addition the switch to the FV core in CAM3(2\deg) changes the character of cloud evolution with latitude such that amounts look similar to T85 in mid-latitudes, but which then transition to looking more like the T42 resolution near the poles. A similar sensitivity to resolution also appears in CAM4 with a somewhat larger signal in the tropics in total cloud. This is to some extent related to a greater retention of cloud water in CAM4 (2\deg) due to the reduction in the fall velocity of ice particles compared to CAM4 (1\deg). 
+
+The reduction in cloud amount at most levels in the atmosphere also impacts the latitudinal distribution of cloud radiative forcing. During the development of CAM4 more emphasis was progressively placed on validation using the CERES-EBAF \citep{CERES-EBAF} cloud radiative products rather than the ERBE \citep{ERBE} products used to validate CAM3 climates. This was primarily due to the energy balanced characteristics of CERES-EBAF that make it more suitable for the near balanced energetics of the earth system. Figure \ref{f_crf_zm} shows the combined impact of the cloud fraction, cloud macro-physical and micro-physical changes between CAM3 and CAM4. The short-wave cloud radiative forcing (SWCF) changes are primarily in response to low- and mid-level cloud fraction reductions. The decreases in SWCF tend to be an improvement in the northern hemisphere and a slight degradation in the southern hemispehere storm track regions compared to CAM3. Consistent with the low-cloud fraction decrease the largest contribution comes from the improved equilibrium cloud fraction calculation in addition to a systematic sensitivity to increased horizontal resolution. In the tropics CAM continues to systematically overestimate SWCF and this was moderatley exacerbated by the increased mid-level detrainment and formation of cloud with the inclusion of DCAPE. Although increased resolution plays a role in increasing tropical SWCF in CAM3 this sensitivity is significantly lower in CAM4. The long-wave cloud forcing (LWCF) changes largely offset those seen in SWCF, which explains why near energy balanced climates are possible with most of the CAM configurations shown here. CAM3.5 simulations reveal a moderate drop in LWCF in the mid-latitude storm tracks. More concerning is the significant sensitivity of LWCF to resolution seen in CAM4 in these regions. Even though CERES-EBAF estimates are lower than ERBE the CAM4 (1\deg) simulations are lower still and begin to smear out the local storm track maxima particularly in the northern hemisphere. In the tropics LWCF continues to be overestimated in CAM4 which is a reflection of the continued presence of a double ITCZ, the details of which are in the next section.
+
+Although CAM4 suffers from some degradation in cloud the extensive physics parameterization developments in the model's successor CAM5 provides a much improved simulation of cloud and cloud optical properties, particularly when analyzed through the Cloud Observation Simulator Package (COSP) diagnostics available in CAM \citep{Kay12}. There is also a significantly lower sensitivity in cloud radiative forcing to increasing resolution (Julio Bacmeister, personnal communication).
+
+\section{Climate simulation impact changes}
+
+The changes to mean climate and climate variability in CAM4 retain many of the changes seen in CAM3.5 and documented in \citet{CCSM4_oview}. As shown in the previous section changes in aspects of the mean climate between CAM3 and CAM4 are attributable to changes associated with dynamical core, moderate physical parameterization changes and horizontal resolution. In this section we will document major changes in the regional climate comparing not only CAM3 and CAM4 AMIP type experiments, but also a subset of experiments with a fully interactive coupled ocean as previously documented in \citet{CCSM4_oview} and \citet{CCSM3} and whose details are documented in Table \ref{t1}.
+Tropospheric distributions in specific humidity and temperature are generally improved in CAM4 (Figure \ref{f_t_rh}). Tropical upper tropospheric reductions in warm temperature biases are largely due to the restricted ability of ZM to over-stablize the temperature profile because of DCAPE. Similarly upper-tropsheric humidity errors are decreased due to a reduced response from ZM. Lower tropospheric tropical relative humidity deficits in CAM3 are replaced by slight moist anomalies in response to the deepening of the boundary layer from including DCAPE as it inherently results in greater mixing in the lower tropopshere. The significant reduction in mid-latitude LWCF at high-resolution in CAM4 (1\deg) is also reflected in an increase in tropospheric temperature from 60\deg poleward further exacebating minor low relative humidity sbiases een in CAM4 (2\deg). Given the relative humidity closure of the \citet{Zhang03} scheme in CAM it is no surprize this reduces the LWCF of mid- to high-clouds in these regions. The cold-pole problem is largely retained even with the change to the FV core, but with some suggestion the problem is reduced in the southern hemisphere in CAM4 (1\deg).
+
+A further reflection of regional differences between CAM3 and CAM4 is seen in the polar cloud differences (Figure \ref{f_polar_cld}). In CAM3 winter-time polar cloud amount was observed to be elevated by as much as 50\% when compared with the WARREN and (not shown) ISCCP low cloud amount. This prompted the inclusion of the freeze drying approximation \citep{Vavrus08} which reduces high-latitude, and polar cloud fraction in the presence of low water vapor values in CAM4. Although it became apparant later with the availability of the CLOUDSAT observations that low cloud fractions were not as excessive in CAM3 as originally thought, the freeze-drying does have a positive impact on the excessive continental LWCF and combined with other cloud changes an improvement in the excessive summer-time SWCF. Furthermore, over many areas low cloud fraction is now actually less than observed when comparing CAM4 and CLOUDSAT.
+
+Although there are significant documented improvements in the transient behavior of both the CAM4 atmosphere \citep[e.g., MJO, ][]{Subraminian11} and CCSM4 fully coupled system \citep[e.g., ENSO, ][]{Deser11} many of the errors associated with the ITCZ remain (Figure \ref{f_prect_zm}). In AMIP-type experiments CAM4 continues to overestimate the magnitude of tropical precipitation and maintains a significant double ITCZ. This is the case when compared to TRMM and particularly true when compared against GPCP where evidence of signficant tropical under-estimation continues to mount \citep{Kato11}. CAM4 worsens the northern ITCZ branch, especially at the higher 1\deg resolution. This is consistant with the excessive trades and associated increased low-level moisture supply identified earlier due to the with the change to the FV dynamical core. In fully coupled experiments, as with CCSM3, northern hemisphere ITCZ biases are reduced significantly in CCSM4, especially compared to CMAP. Consistent with all observations CCSM4 also retains a larger northern hemisphere precipitation maximum compared to the southern hemisphere maximum, although the maximum is reduced compared to CAM4 simulations, ameliorating the impact of the increased trade winds. This was not the case in CCSM3. Although, zonally averaged precipitation improvements in CAM4 and CCSM4 are marginal at best, the regional distribution of bias reductions are much more significant. In Figure \ref{f_prect} AMIP-type experiments show marginal improvements in global Root Mean Square Error (RMSE, not shown) in CAM4 simulations and it is clear that global improvements are hindered by a worsening of the northern branch of the ITCZ in the central and eastern Pacific. However, regional improvements in precipitation are evident in CAM4 particularly at 1\deg. These include a decrease in the excessive Indian monsoon rainfall and a reduction in the northern hemisphere western ocean basin rainfall deficits associated with improved resolution of baroclinic storm activity in CAM4 (1\deg) simulations. The benefits of CAM4 being coupled to the updated version of POP are also illustrated in Figure \ref{f_prect}. Even though the global mean bias in precipitation increases the RMSE is reduced in CCSM4 compared to CCSM3 so much so that the simulation skill in CCSM4 (1\deg) is equivalent to CAM4 (1\deg). These global improvements come largely from a reduction in the southern ITCZ bias and west Indian ocean errors seen in CCSM3. 
+
+For the fully coupled climate surface stresses are the primary driver of the dynamic circulation. In this respect CAM4 and in particular CCSM4 show significant improvements compared to CAM3 and CCSM3. Figure \ref{f_taux} shows the surface zonal stress anomalies of AMIP-type and fully coupled experiments. CAM3 produced a very strong southern hemisphere westerly surface stress approximately 50\% greater than observed. This bias translates to the CCSM3 simulations and also worsens. The oceanic consequences are an associated excessive Antarctic Circumpolar Current (ACC) and too much transport through the Drake passage \citep{Large06}. In CAM4 and CCSM4 these southern ocean zonal surface stress are improved markedly particularly in CAM4. Coupling with an interactive ocean increases the biases proportionately more than in CCSM3, but biases remain significantly lower particularly in the Indian and West Pacific Oceans. A potential mechanism for the improvement in the southern ocean surface stress is a shift and correction in the teleconnections associated with northern hemisphere summer-time tropical heating patterns. Figure \ref{f_psichi} shows JJA averaged upper-tropospheric velocity potential and streamfunction, broadly representing tropical heating and barotropic teleconnection responses respectively \citep{Sardeshmukh87}. During JJA the Asian monsoon dominates the tropical heating and upper tropospheric divergent flow. Due to vorticity advection of the divergent flow this establishes the stationary Rossby wave response with a pair of cyclones to the west of the maximum divergence. Both CAM3 and CAM4 overestimate the upper tropospheric divergent flow with local velocity potential maxima near the Arbabian peninsular. Since the excess is slightly larger in CAM3 due to large precipitation biases (see figure \ref{f_prect}) it generates a larger anomalous Rossby wave response, particularly over the Indian subcontinent and in the Southern Indian ocean. In the fully coupled equivalent analysis the divergent anomalies are much lower, reflecting an improved monsoon strength, but the streamfunction anomalies to the east of the heating anomalies have the potential to force a stronger anomalous barotropic response in the southern Indian ocean and to the south of Australia; the regions with the largest positive zonal surface stress anomalies in CAM3 and CCSM3. 
+
+\subsection {Atmospheric Blocking and Skill Scores}
+
+Recent observed extreme weather events have been linked to persistent continental high-pressure blocking systems, both in Summer \citep[e.g., 2010 Russian heat wave, ][]{Dole12} and Winter \citep[e.g., 2010 Winter in north western Europe, ][]{Cattiaux10}. For a model to reproduce these kind of extreme events at any particular resolution it has to establish sufficient skill at capturing the underlying large-scale patterns of persistence. Previous versions of CAM have been analyzed for their skill in producing realistic blocking characteristics in AMIP simulations \citep{Dandrea98} based on the operational weather forecast blocking index of \citet{Tibaldi90}. Figure \ref{f_block} shows the performance in CAM3 and CAM4 model configurations. Blocking statistics are somewhat variable from one year to the next and between ensemble members of the same experiment configuration. However, it is clear that the blocking behavior in CAM4 is significantly different and mostly superior to CAM3. In northern hemisphere Spring CAM significantly underestimates Atlantic blocking by more than a factor of two in CAM3. Simulations using CAM4 are able to produce significantly increased blocking frequency over western Europe, but large deficiencies remain over the majority of the Atlantic sector. In fully coupled CCSM4 simulations Atlantic blocking deficiencies are even greater (not shown) due to significant gulf stream separation related SST errors. Pacific blocking is also underestimated in CAM3 with a slight increase in frequency in CAM4. These minor improvements are due to a change in the downstream stationary wave pattern in response to the changing tropical convective heat source. This also appears to be the case in summer where very low blocking frequencies in CAM3 are replaced with a more realistic double blocking peak in CAM4 near 130\deg E and 230\deg E. Most of the blocking frequency changes in CAM4 also occur independently of the dynamical core change to FV.
+
+A final simulation performance measure for CAM4 is a set of simulation error scores based on the northern hemisphere winter-time average 200-hPa height field. These error scores have been documented and used in many previous version of CAM and its predecessors \citep{CAM3,CCM3} to provide a stable measure of model improvement associated with the northern hemisphere winter-time stationary wave pattern. Figure \ref{f_sscore} shows the normalized mean square errors (NMSE) and the scaled variance ratio (SVR) for CAM3, CAM4 and a number of development runs. Previous model versions were diagnosed just for January climatology (Fig. \ref{f_sscore}a), but a more robust test of model performance is presented for the whole DJF winter climatology (Fig. \ref{f_sscore}b). Briefly, SVR is a measure of how NMSE can be erroneously improved through higher model variance and NMSE is a sum of the unconditional model bias, $U(Z_m)$, the conditional model bias, $C(Z_m)$, and a measure of phase error, $P(Z_m)$, that goes to zero when model and analysis fields are perfectly correlated. For both January and DJF, error scores degrade upon initial inclusion of the FV core through a jump in the unconditional bias. However, through successive development versions of the model the unconditional bias is reduced, most prominently in response to both the CMT and DCAPE changes in the CAM3-CONV simulation. For the whole DJF climatology the error score then decreases monotonically with CAM3.5, CAM4 (2\deg) and CAM4 (1\deg). Clearly more effort was invested in providing a more accurate climate simulation for CAM3.5 and CAM4, but it is illustrative that not all changes to the model configuration result in a monotonic improvement in mean climate, at least using this error score. Additionally, although the error scores may have improved between CAM3 and CAM4, there is still much more similarity among all the reanalyses than between any one reanalyses and CAM4 implying significant model errors remain.
+
+\section{Conclusions}
+This paper describes the evolution of the community atmosphere model (CAM) mean climate in development from versions CAM3 to CAM4 in both prescribed SST (AMIP) and fully coupled experiments. Major physics changes are the addition of a dilute cape (DCAPE) closure calculation and Convective Momentum Transports (CMT) in the ZM deep convection scheme. Additional moist physics changes include a freeze drying mechanism to alleviate winter polar cloud excesses and a more consistent calculation of cloud fraction that passes a thermodynamic state to the radiation calculation that is much closer to macrophysical equilibrium. Although simulations using CAM4 improve significantly on CAM3 mostly in the area of transient variability \citep[e.g., ][]{Subraminian11,Deser11}, there are also significant improvements in the mean climate. Chief among these are the improvements in tropical precipitation distributions, tropospheric humidity distributions, winter-time polar cloud amounts and surface stress distributions. The reduction in excessive surface stresses has had a more noticeable impact on the fully coupled climate. In the tropical Pacific improvements due to CMT have been implicated in the associated CCSM4 ENSO improvements \citep{Neale08} and the reductions in southern hemisphere surface stresses have reduced the strength of the associated ACC and Drake passage transport \citep{Large06}. There are however only marginal improvements and some degradations in the zonal mean cloud related quantities in CAM4. Outside of the winter-time arctic cloud changes the modifications to the moist physics (DCAPE and the equilibrium cloud fraction calculation) were not intended to address specific simulation shortcomings in cloud fraction and radiative properties. As a consequence cloud and cloud forcing has decreased in the extra-tropics which on the whole is in poorer agreement with observations. This disagreement is exacerbated with CAM4 (1\deg) indicating a sensitivity to horizontal resolution that is much lower than in CAM3 using the spectral dynamical core. Initial results show that the CAM4  resolution sensitivity is much more acute in 0.25\deg simulations \citep{Bacmeister12} and it has not been possible to correct for these biases in the current physics framework. Developments toward version 5 of CAM \citep[CAM5, ][]{Rasch12} reduces some of the cloud-resolution sensitivities significantly. This is in large part due to the shift in ice cloud closure from a purely relative humidity based formulation in CAM3 and CAM4 \citep{Zhang03} to a scheme that allows ice supersaturation \citep{Gettelman10} when working in concert with the new CAM5 two-moment microphysics \citep{Morrison08}.
+
+\begin{acknowledgment} 
+The CESM project is supported by the National Science Foundation and the Office of Science (BER) of the U.S. Department of Energy. NCAR is sponsored by the National Science Foundation. Thanks are also due to the many other software engineers and scientists who worked on developing CAM4 and CCSM4. Computing resources were provided by the Climate Simulation Laboratory at NCAR's Computational and Information Systems Laboratory (CISL), sponsored by the National Science Foundation and other agencies. This research was enabled by CISL compute and storage resources. Bluefire, a 4,064-processor IBM Power6 resource with a peak of 77 TeraFLOPS provided more than 7.5 million computing hours, the GLADE high-speed disk resources provided 0.4 PetaBytes of dedicated disk and CISL's 12-PB HPSS archive provided over 1 PetaByte of storage in support of this research project.
+\end{acknowledgment}
+
+
+\nolinenumbers
+% Use appendix}[A], {appendix}[B], etc. etc. in place of appendix if you have multiple appendixes.
+%\ifthenelse{\boolean{dc}}
+{}
+{\clearpage}
+%\begin{appendix}
+%\section*{\begin{center}Appendix Title Is Entered Here (Primary heading)\end{center}}
+%\subsection{First appendix secondary heading}
+
+%\subsection{Second appendix secondary heading}
+
+%\subsubsection{First appendix tertiary heading}
+
+%\subsubsection{Second appendix tertiary heading}
+
+%\paragraph{First appendix quarternary heading}
+
+%\paragraph{Second appendix quarternary heading}
+
+%\end{appendix}
+
+% Create a bibliography directory and place your .bib file there.
+\ifthenelse{\boolean{dc}}
+{}
+{\clearpage}
+\bibliographystyle{./ametsoc}
+\bibliography{./references}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIGURES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+  \begin{center}
+    \subfloat{\includegraphics[width=0.32\textwidth]{./figures/f_solin_ann.eps}}                
+    \subfloat{\includegraphics[width=0.32\textwidth]{./figures/f_solin_djf.eps}}
+    \subfloat{\includegraphics[width=0.32\textwidth]{./figures/f_solin_jja.eps}}
+  \end{center}
+  \caption{Differences in zonal distribution of insolation between CAM3 and CAM4 compared to CERES-EBAF (2000-2010) estimate of the annual (left) DJF (center) and JJA (right) average.}\label{f_solin}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.75\textwidth,angle=0]{./figures/f_taux_zm.eps}\\
+  \end{center}
+  \caption{Surface zonal stress ($Nm^{-2}$), zonal average annual climate bias for CAM3 model versions (green), development versions (grays) and CAM4 versions (blue) compared to ERS-1 microwave scatterometer winds.}\label{f_taux_zm}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.75\textwidth,angle=0]{./figures/f_pratio.eps}\\
+ \end{center}
+  \caption{Percentage of total precipitation from large-scale (resolved) processes for (a) CAM3 (T85); (b) CAM3-DIL (2\deg); (b) CAM4 (2\deg); (b) CAM4 (1\deg). Regions with precipitation less the 4 mm day$^{-1}$ or large-scale fractions greater than 40\% are excluded.}\label{f_pratio}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.75\textwidth,angle=0]{./figures/f_raobs.eps}\\
+  \end{center}
+   \caption{Vertical profiles of average July temperature ($K$, left) and moist static energy ($J/kg$, right) for observed radiosondes (RAOBS) and CAM3 (T85) and CAM4 (1\deg) simulations.}\label{f_raobs}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.75\textwidth,angle=90]{./figures/f_zmtend.eps}\\
+  \end{center}
+  \caption{Zonal and annually averaged deep convection tendencies in CAM3 (2\deg) for (a) temperature ($K/day$) and (c) specific humidity ($g/kg/day$). Deep convection tendencies in CAM3-DIL (2\deg) minus CAM3 (2\deg) for (b) temperature and (d) specific humidity)}\label{f_zmtend}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+    \subfloat{\includegraphics[width=0.45\textwidth]{./figures/f_cldtot_zm.eps}}                
+    \subfloat{\includegraphics[width=0.45\textwidth]{./figures/f_cldlow_zm.eps}}
+  \end{center}
+  \caption{Zonally averaged distribution of cloud fraction (\%) from CAM3 to CAM4. Total cloud (left) and low cloud (below approximately 700 hPa, right). Observed datasets are from CLOUDSAT and ISCCP}\label{f_cloud_zm}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+    \subfloat{\includegraphics[width=0.45\textwidth]{./figures/f_swcf_zm.eps}}                
+    \subfloat{\includegraphics[width=0.45\textwidth]{./figures/f_lwcf_zm.eps}}
+  \end{center}
+  \caption{Zonally averaged distribution of cloud radiative forcing from CAM3 to CAM4. Short wave cloud forcing (W/m$^2$, left; positive represents cooling) and long wave cloud forcing (W/m$^2$, right; positive represents warming)}\label{f_crf_zm}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.5\textwidth,angle=90]{./figures/f_t_rh.eps}\\
+   \end{center}
+  \caption{Zonal and annually averaged temperature biases (K, top) and relative humidity biases , bottom) for (a) and (d) CAM3 (T85), (b) and (d) CAM4 (2\deg), and (c) and (e) CAM4 (1\deg) compared to ERA40.}\label{f_t_rh}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.9\textwidth,angle=0]{./figures/f_polar_cld.eps}\\
+  \end{center}
+  \caption{Polar low-cloud bias in CAM3 (T85) and CAM4 (1\deg). DJF integrated low cloud (surface to 700 hPa) compared to; (a) and (b) Warren in-situ observations and; (c) and (d) CloudSat-based observations; (e) and (f) DJF long-wave cloud forcing and (g) and (h) JJA short-wave cloud forcing, all compared to the CERES-based EBAF equivalent cloud forcing products.}\label{f_polar_cld}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.75\textwidth,angle=0]{./figures/f_prect_zm.eps}\\
+   \end{center}
+  \caption{Zonal and annually averaged mean precipitation $(mm/day)$ (a) AMIP-type CAM experiments and (b) fully coupled CCSM experiments, compared to CMAP (1979-1998), GPCP (1979-2003) and TRMM (1998-2004) observations.}\label{f_prect_zm}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.9\textwidth,angle=0]{./figures/f_prect.eps}\\
+ \end{center}
+  \caption{Annually averaged (a) observed precipitation (GPCP, 1979-2003) and model precipitation biases $(mm/day)$ in AMIP-type experiments for (b) CAM3 (T85), (c) CAM4 (2\deg), (d) CAM4 (1\deg), and in fully coupled experiments for (e) CCSM3 (T85), (f) CCSM4 (2\deg) and (g) CCSM4 (1\deg).}\label{f_prect}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.9\textwidth,angle=0]{./figures/f_taux.eps}\\
+  \end{center}
+  \caption{as figure \ref{f_prect}, but for surface zonal stress ($Nm^{-2}$, versus ERS observations)}\label{f_taux}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.75\textwidth,angle=90]{./figures/f_psichi.eps}\\
+  \end{center}
+  \caption{June/July/August average 150-hPa stream function ($m^2s^{-2}$, left) and velocity potential ($m^2s^{-2}$, right) for (a) and (b) observed (ERA40) and observed bias for (c) and (d) CAM4 (1\deg), (e) and (f) CAM3 (T85), (g) and (h) CCSM4 (1\deg) and (i) and (j) CCSM3 (T85).}\label{f_psichi}
+\end{figure}
+
+
+\begin{figure}[t]
+  \begin{center}
+    \subfloat{\includegraphics[width=0.45\textwidth]{./figures/f_block_mam.eps}}                
+    \subfloat{\includegraphics[width=0.45\textwidth]{./figures/f_block_jja.eps}}
+  \end{center}
+  \caption{Longitudinal northern hemisphere blocking frequency as determined by the blocking index of \citet{Dandrea98} for reanalyses and CAM3 and CAM4 ensemble experiments during (a) March, April, May (MAM); and (b) June, July, August (JJA), for the time period 1981-2000, unless otherwise stated}\label{f_block}
+\end{figure}
+
+
+\begin{figure}[t]
+  \begin{center}
+  \noindent\includegraphics[width=0.9\textwidth,angle=0]{./figures/f_sscore.eps}\\
+   \end{center}
+  \caption{Error score measures (NMSE and SVR) for release versions (in bold text) and development versions of CAM described in Table \ref{t1} as compared with the original ERA15-ECMWF re-analysis \citep{ERA15}. SVR is the thin white bar on the left of each pair and NMSE is to the right shown as the sum of the terms $U(z_m)$ (hatched), $C(Z_m)$ (black), and $P(Z_m)$. All measures are described in the text. Comparison to the right of the vertical dashed line are with alternate reanalysis products (ERA-interim, ERA40, JRA25 and NCEP).} 
+\label{f_sscore}
+\end{figure}
+
+
+\pagebreak
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[t]
+\caption{Summary details of the CAM and CCSM experiments analyzed using CAM3, CAM4 and intermediate development model versions.}\label{t1}
+\begin{center}
+\begin{tabular}{cccccrrcrc}
+\hline\hline
+$Name$ & $Description$ &$SST$ & $Analysis Period$ \\
+\hline
+CAM3 (T42)       & Spectral low-resolution                         & AMIP     & 1981-2000  \\
+CAM3 (T85)       & Spectral high-resolution                        & AMIP     & 1981-2000  \\
+CAM3 (2\deg)     & FV low-resolution                               & AMIP     & 1980-1999  \\
+CAM3-DIL (2\deg) & FV + CAPE dilution                              & AMIP     & 1980-1999  \\
+CAM3-CMT (2\deg) & FV + convective momentum transports             & AMIP     & 1980-1999  \\
+CAM3-CONV (2\deg)& FV + convective changes (CMT+DIL)               & AMIP     & 1980-1999  \\
+CAM3.5 (2\deg)   & Interim CAM release: \citep{CCSM3.5}            & AMIP     & 1979-2005  \\
+                 & FV-CONV+freeze drying+cloud fraction update     &          &            \\
+CAM4 (2\deg)     & FV low-resolution                               & AMIP     & 1981-2000  \\
+CAM4 (1\deg)     & FV high resolution                              & AMIP     & 1981-2000  \\
+\hline
+CCSM3 (T85)      & Spectral high-resolution                        & Coupled  & 1970-1999  \\
+CCSM4 (2\deg)    & FV low-resolution                               & Coupled  & 1970-1999  \\
+CCSM4 (1\deg)    & FV high-resolution                              & Coupled  & 1970-1999  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+%
+\end{document}
